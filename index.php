@@ -6,21 +6,25 @@
 <body>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-    Email: <input type="text" name="email"><br>
+    Прізвище: <input type="text" name="surname"><br>
+    Ім'я: <input type="text" name="name"><br>
+    По-батькові: <input type="text" name="patronymic"><br>
     <input type="submit">
 </form>
 <?php
-if (isset($_POST['email'])) {
+if (!empty($_POST['surname']) && !empty($_POST['name']) && !empty($_POST['patronymic'])) {
 
-    $email = trim($_POST['email']);
-    $searchSymbol = strpos($email, '@');
-    $searchDot = strpos($email, '.', $searchSymbol);
-    $searchEndDot = strpos($email, '.', -1);
-    if ($searchSymbol === false or $searchDot === false or $searchEndDot !== false) {
-        echo 'Email не коректний';
-    } else {
-        echo 'Email коректний';
-    }
+    $name = mb_strtoupper(trim($_POST['name']));
+    $surname = mb_strtoupper(trim($_POST['surname']));
+    $patronymic = mb_strtoupper(trim($_POST['patronymic']));
+
+    $firstLetterName = mb_substr($name, 0, 1);
+    $firstLetterSurname = mb_substr($surname, 0, 1);
+    $firstLetterPatronymic = mb_substr($patronymic, 0, 1);
+
+    echo $firstLetterSurname.$firstLetterName.$firstLetterPatronymic;
+} else {
+    echo 'Заповніть форму';
 }
 ?>
 
