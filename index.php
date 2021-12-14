@@ -6,23 +6,16 @@
 <body>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-    Прізвище: <input type="text" name="surname"><br>
-    Ім'я: <input type="text" name="name"><br>
-    По-батькові: <input type="text" name="patronymic"><br>
+    Текст: <input type="text" name="text"><br>
     <input type="submit">
 </form>
 <?php
-if (!empty($_POST['surname']) && !empty($_POST['name']) && !empty($_POST['patronymic'])) {
+if (!empty($_POST['text'])) {
 
-    $name = mb_strtoupper(trim($_POST['name']));
-    $surname = mb_strtoupper(trim($_POST['surname']));
-    $patronymic = mb_strtoupper(trim($_POST['patronymic']));
+    $text = $_POST['text'];
+    $resultTest = preg_replace('"\b(https?://\S+)"', "<a href='$1'>$1</a>", $text);
 
-    $firstLetterName = mb_substr($name, 0, 1);
-    $firstLetterSurname = mb_substr($surname, 0, 1);
-    $firstLetterPatronymic = mb_substr($patronymic, 0, 1);
-
-    echo $firstLetterSurname.$firstLetterName.$firstLetterPatronymic;
+    echo $resultTest;
 } else {
     echo 'Заповніть форму';
 }
