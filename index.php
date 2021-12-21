@@ -6,46 +6,24 @@
 <body>
 
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
-    <select name="fuel">
-        <option value="diesel">Дизель</option>
-        <option value="petrol">Бензин</option>
-    </select><br>
-    Об'єм двигуна: <input type="text" name="volume" placeholder="см.куб"><br>
-    Рік випуску автомобіля: <input type="number" min="1970" max="2022" name="graduation"><br>
-    Вартість автомобіля: <input type="text" name="price"><br>
+    Кількість елементів піраміди: <input type="text" name="qty_elem">
     <input type="submit">
 </form>
 <?php
-if (empty($_POST['fuel']) || empty($_POST['volume']) || empty($_POST['graduation']) || empty($_POST['price'])) {
-    echo 'Всі поля обов\'язкові';
+if (empty($_POST['qty_elem'])) {
+    echo 'Заповніть поле форми';
 } else {
-    $volume = $_POST['volume'];
-    $graduation = $_POST['graduation'];
-    $price = $_POST['price'];
-
-    if ($volume < '500') {
-        echo 'Не правильний об\'єм двигуна';
+    $qtyElem = $_POST['qty_elem'];
+    if ($qtyElem > 15) {
+        echo 'Неправильна висота піраміди ( від 1 до 15 )';
     } else {
-        if ($_POST['fuel'] == 'diesel') {
-            $baseRate = 75;
-        } else {
-            $baseRate = 50;
+        $elem = '##';
+        for ($i = 1; $i <= $qtyElem; $i++) {
+            for ($j = 1; $j <= $i; $j++) {
+                echo $elem;
+            }
+            echo '<br>';
         }
-        $currDate = date('Y', time());
-        $diff = $currDate - $graduation - 1;
-
-        $engineRatio = round($volume / 1000);
-
-        if ($diff == 1) {
-            $ageRatio = 1;
-        } else {
-            $ageRatio = $diff;
-        }
-        $customsClearance = $baseRate * $engineRatio * $ageRatio;
-        $resultPriceCar = $price + $customsClearance;
-
-        echo "Розмитнення автомобіля = $customsClearance євро" . "<br>";
-        echo "Загальна вартість автомобіля = $resultPriceCar євро";
     }
 }
 ?>
