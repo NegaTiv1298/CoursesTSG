@@ -39,3 +39,4 @@ foreach($products as $product)  :
         <p><?php if(!$product['qty'] > 0) { echo 'Нема в наявності'; } ?></p>
     </div>
 <?php endforeach; ?>
+
